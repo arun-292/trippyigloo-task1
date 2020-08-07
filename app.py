@@ -16,23 +16,22 @@ def home():
 
 @app.route('/homepage')
 def main():
-    if 'Email' in session:
-        return render_template('homepage.html')
-        #return 'you are currently logged in as ' + session['Email']
-
     return render_template('homepage.html')
 
 
 @app.route('/signup',methods=['POST','GET'])
 def signup():
     if request.method == 'POST':
-        users=db.users
-        existing_user = users.find_one({'Email':request.form['Email']})
-        if existing_user is None:
-            users.insert({'fullname' : request.form['fullname'], 'Email':request.form['Email'], 'password': request.form['password']})
-            return redirect(url_for('signin'))
+        if request.form['fullname'] and request.form['Email'] and request.form['password']:
+            users=db.users
+            existing_user = users.find_one({'Email':request.form['Email']})
+            if existing_user is None:
+                users.insert({'fullname' : request.form['fullname'], 'Email':request.form['Email'], 'password': request.form['password']})
+                return redirect(url_for('signin'))
+            else:
+                return 'that email already exist!'
         else:
-            return 'that email already exist!'
+            return 'enter valid details'
     else:
         return render_template('signup.html')
 
@@ -47,7 +46,7 @@ def signin():
             return redirect(url_for('signup'))
         else:
             if request.form['password'] == existing_user['password']:
-                session['Email'] = request.form['Email']
+                session['fullname'] = existing_user['fullname']
                 return redirect(url_for('main'))
             else:
                 return 'invalid details...'

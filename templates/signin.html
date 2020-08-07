@@ -6,9 +6,9 @@
 
 {% block body %}
 
-{% if session['Email']%}
+{% if session['fullname']%}
 <div class="row justify-content-center ">
-    <h4 class="m-4"> you are currently logged in as {{session['Email']}}</h4>
+    <h4 class="m-4">Hello, {{session['fullname']}}</h4>
     <a href="/handlesession" class="m-4 btn btn-outline-danger btn-lg">Log out</a>
 </div>
 {% else %}

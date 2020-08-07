@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    {% if session['Email']%}
-    <div class="row justify-content-center ">
-        <h4 class="m-4"> you are currently logged in as {{session['Email']}}</h4>
+<div class="row justify-content-center ">
+    {% if session['fullname'] %}
+            <h4 class="m-4"> Hello, {{session['fullname']}}</h4>
 
-        <a href="/handlesession" class="m-4 btn btn-outline-danger btn-lg">Log out</a>
+            <a href="/handlesession" class="m-4 btn btn-outline-danger btn-lg">Log out</a>
+            
+        {% else %}
     </div>
-    {% else %}
-
     <div class="row justify-content-center ">
         <h1>Welcome...</h1>
     </div>
@@ -22,6 +22,6 @@
     </div>
 
     {% endif %}
-  
+
 
 {% endblock %}
